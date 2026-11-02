@@ -1,0 +1,62 @@
+interface Loopback0
+ ip address 4.4.4.4 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 200.0.0.254 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf network point-to-point
+!
+interface Ethernet0/1
+ ip address 10.215.26.24 255.255.255.0
+ ip nat outside
+ ip virtual-reassembly in
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 4.4.4.4
+ passive-interface default
+ no passive-interface Ethernet0/0
+ network 200.0.0.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip nat source list 1 interface Ethernet0/1 overload
+ip nat inside source static 172.16.22.10 10.215.26.24
+!
+!
+!
+access-list 10 deny   172.16.10.0 0.0.0.255
+access-list 10 deny   172.16.20.0 0.0.0.255
+access-list 10 deny   172.16.30.0 0.0.0.255
+access-list 10 deny   172.16.22.0 0.0.0.255
+access-list 10 permit any
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+!
+end
