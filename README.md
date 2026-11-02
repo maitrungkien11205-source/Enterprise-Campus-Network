@@ -11,7 +11,6 @@ This project demonstrates the design and simulation of an enterprise campus netw
 - STP / RSTP
 - EtherChannel (LACP)
 - OSPF Dynamic Routing
-- HSRP / VRRP
 - NAT / PAT
 - Access Control Lists (ACL)
 - DHCP
